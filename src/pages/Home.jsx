@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
 
 const Home = () => {
 
   const [articles, setArticles] = useState([]);
-  const searchNews = async () => {
+  const searchNews = async (news) => {
     try {
-      const url = `https://newsapi.org/v2/everything?q=agriculture&from=2025-02-18&to=2025-02-18&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
+      const url = `https://newsapi.org/v2/everything?q=${news}&from=2025-02-18&to=2025-02-18&sortBy=date&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -43,18 +42,18 @@ const Home = () => {
               <div className='text-black text-sm'>{article.title}</div>
               <div className='text-gray-500 text-sm '>
                 <span className='pr-1'>{article.description}</span>
-                <a className='hover:bg-amber-500 text-black rounded-full px-2' href={article.url}>Read More</a></div>
+                <a className='hover:bg-amber-500 text-amber-500 hover:text-black rounded-full px-2' href={article.url}>Read More</a></div>
               
             </div>
             <div>
               <span>{article.author}, {article.source.name} </span>
               <div className='flex items-center'>
-                <span class="material-symbols-outlined">schedule</span>
+                <span className="material-symbols-outlined">schedule</span>
                 <span className=''>{new Date(article.publishedAt).toLocaleString() }</span>
               </div>
             </div>
           </div>
-        )).slice(0,10)  
+        )).slice(0,20)  
       }
       </div>
       

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
-  const [search, setSearch] = useState(false)
+  const [search, setSearch] = useState(false);
+  const inputValue = useRef();
 
   useEffect(()=>{
     if(visible){
@@ -66,9 +66,10 @@ const Navbar = () => {
               <input 
                 className='outline-none px-4 py-1 flex-1' 
                 type="text" 
-                placeholder='Search...' 
+                placeholder='Search...'
+                ref={inputValue}
               />
-              <div className="block h-full cursor-pointer bg-blue-500 text-white rounded-tr-full rounded-br-full px-4 py-1">GO</div>
+              <div onClick={()=>searchNews(inputValue.current.value)} className="block h-full cursor-pointer bg-blue-500 text-white rounded-tr-full rounded-br-full px-4 py-1">GO</div>
             </div>
           )}
           </div>

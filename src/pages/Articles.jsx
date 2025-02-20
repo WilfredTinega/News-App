@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-const Education = () => {
-  const [articles, setArticles] = useState([]);
-    const searchNews = async (news) => {
-      try {
-        const url = `https://newsapi.org/v2/everything?q=${news}&from=2025-02-18&to=2025-02-18&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
-        const response = await fetch(url);
-        const data = await response.json();
-  
-        console.log(data.articles);
-  
-        setArticles(
-          data.articles
-        )
-        
-        
-      } catch (error) {
-        console.error(error.message)
+const Articles = () => {
+    const [articles, setArticles] = useState([]);
+      const searchNews = async (news) => {
+        try {
+          const url = `https://newsapi.org/v2/everything?q=${news}&from=2025-02-18&to=2025-02-18&sortBy=date&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
+          const response = await fetch(url);
+          const data = await response.json();
+    
+          console.log(data.articles);
+    
+          setArticles(
+            data.articles
+          )
+          
+          
+        } catch (error) {
+          console.error(error.message)
+        }
       }
-    }
-  
-    useEffect(()=>{
-      searchNews("Education");
-    },[])
   return (
     <div>
       <h3 className='flex items-center'>
@@ -41,7 +37,7 @@ const Education = () => {
               <div className='text-black text-sm'>{article.title}</div>
               <div className='text-gray-500 text-sm '>
                 <span className='pr-1'>{article.description}</span>
-                <a className='hover:bg-amber-500 text-black rounded-full px-2' href={article.url}>Read More</a></div>
+                <a className='hover:bg-amber-500 text-amber-500 hover:text-black rounded-full px-2' href={article.url}>Read More</a></div>
               
             </div>
             <div>
@@ -52,7 +48,7 @@ const Education = () => {
               </div>
             </div>
           </div>
-        )).slice(0,10)  
+        )).slice(0,20)  
       }
       </div>
       
@@ -60,4 +56,4 @@ const Education = () => {
   )
 }
 
-export default Education
+export default Articles
