@@ -8,11 +8,13 @@ import Tech from './pages/Tech'
 import Agriculture from './pages/Agriculture'
 import Health from './pages/Health'
 import Education from './pages/Education'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
     <>
       <Navbar/>
+      <ToastContainer autoClose = {3000}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='latest' element={<Hot/>}/>

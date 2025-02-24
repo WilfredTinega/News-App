@@ -1,12 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { toast } from 'react-toastify';
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
   const [search, setSearch] = useState(false);
   const inputValue = useRef();
 
-  useEffect(()=>{
+  if(!inputValue){
+    toast.error("Enter Search Term", {
+      position: 'bottom-right'
+    })
+  }else{
+    toast.success("Searching...", {
+      position: 'bottom-right'
+    })
+  }
+
+  useEffect(() => {
     if(visible){
       document.body.style.overflow = "hidden";
     }
@@ -22,7 +33,7 @@ const Navbar = () => {
 
   return (
     <div className=' sticky top-0 left-0 bg-white'>
-      <div className='flex justify-between items-center mt-2.5 sticky top-0 left-0'>
+      <div className='flex px-4 sm:px-20 justify-between items-center mt-2.5 sticky top-0 left-0'>
 
         <Link to="/" className='text-sm'>Change News<sup className='text-[orange]'>KE</sup></Link>       
  
@@ -64,21 +75,21 @@ const Navbar = () => {
           {search && (
             <div className='flex items-center justify-center border border-amber-500 rounded-full'>
               <input 
-                className='outline-none px-4 py-1 flex-1' 
+                className='outline-none px-2 py-0.5 text-sm flex-1' 
                 type="text" 
                 placeholder='Search...'
                 ref={inputValue}
               />
-              <div onClick={()=>searchNews(inputValue.current.value)} className="block h-full cursor-pointer bg-blue-500 text-white rounded-tr-full rounded-br-full px-4 py-1">GO</div>
+              <div onClick={()=>searchNews()} className="block h-full cursor-pointer bg-blue-500 text-sm text-white rounded-tr-full rounded-br-full px-2 py-0.5">GO</div>
             </div>
           )}
           </div>
 
           <span onClick={()=>setSearch(!search)} className="material-symbols-outlined cursor-pointer text-[orange]">search</span>
           
-        </div>
+      </div>
 
-      <hr className='mt-2 text-[orange]' />
+      <hr className='mt-2 text-blue-500' />
     </div>
   )
 }

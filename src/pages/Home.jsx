@@ -26,11 +26,19 @@ const Home = () => {
   },[])
   return (
     <div>
-      <h3 className='flex items-center'>
-        <hr className='w-9 font-bold' />
-        <span>Latest News</span>
-        <hr className='w-1/12 text-2xl'/>
-      </h3>
+      <div className='h-[200] bg-red-500'>
+        <div>
+
+        </div>
+      </div>
+      <div>
+        <h3 className='flex items-center'>
+          <hr className='w-9 font-bold' />
+          <span>Latest News</span>
+          <hr className='w-1/12 text-2xl'/>
+        </h3>
+      </div>
+      
       <div  className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 px-1 inset-shadow-zinc-300'>
         {
         articles.map((article, index) => (
