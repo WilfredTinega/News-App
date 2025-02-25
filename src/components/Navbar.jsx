@@ -1,21 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { toast } from 'react-toastify';
 const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
-  const [search, setSearch] = useState(false);
-  const inputValue = useRef();
-
-  if(!inputValue){
-    toast.error("Enter Search Term", {
-      position: 'bottom-right'
-    })
-  }else{
-    toast.success("Searching...", {
-      position: 'bottom-right'
-    })
-  }
 
   useEffect(() => {
     if(visible){
@@ -29,17 +16,17 @@ const Navbar = () => {
       document.body.style.overflow = "auto";
     };
 
-  },[visible])
+  },[visible]);
 
   return (
     <div className=' sticky top-0 left-0 bg-white'>
       <div className='flex px-4 sm:px-20 justify-between items-center mt-2.5 sticky top-0 left-0'>
 
-        <Link to="/" className='text-sm'>Change News<sup className='text-[orange]'>KE</sup></Link>       
+        <Link to="/" className='text-sm shadow-blue-500'>Change News<sup className='text-[orange]'>KE</sup></Link>       
  
         <div className='hidden gap-2 lg:flex'>
           <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/">Home</NavLink>
-          <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/latest">Hot</NavLink>
+          <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/trending-news">Trends</NavLink>
           <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/tech">Tech</NavLink>
           <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/agriculture">Agriculture</NavLink>
           <NavLink className="hover:bg-[orange] p-1 rounded-sm"  to="/health">Health</NavLink>
@@ -57,7 +44,7 @@ const Navbar = () => {
 
                 <div className='flex flex-col'>
                   <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/">Home</NavLink>
-                  <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/latest">Hot</NavLink>
+                  <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/trending-news">Trends</NavLink>
                   <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/tech">Tech</NavLink>
                   <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/agriculture">Agriculture</NavLink>
                   <NavLink onClick={()=>setVisible(false)} className="hover:bg-[orange] p-1"  to="/health">Health</NavLink>
@@ -69,26 +56,6 @@ const Navbar = () => {
           </div>
         
       </div>
-
-      <div className='flex items-center justify-center gap-2'>
-          <div>
-          {search && (
-            <div className='flex items-center justify-center border border-amber-500 rounded-full'>
-              <input 
-                className='outline-none px-2 py-0.5 text-sm flex-1' 
-                type="text" 
-                placeholder='Search...'
-                ref={inputValue}
-              />
-              <div onClick={()=>searchNews()} className="block h-full cursor-pointer bg-blue-500 text-sm text-white rounded-tr-full rounded-br-full px-2 py-0.5">GO</div>
-            </div>
-          )}
-          </div>
-
-          <span onClick={()=>setSearch(!search)} className="material-symbols-outlined cursor-pointer text-[orange]">search</span>
-          
-      </div>
-
       <hr className='mt-2 text-blue-500' />
     </div>
   )

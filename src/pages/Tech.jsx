@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { getElapsedTime } from '../components/utils';
+import Title from '../components/Tittle';
+import loading from '../assets/loading.gif';
 
 const Tech = () => {
   const [articles, setArticles] = useState([]);
     const searchNews = async (news) => {
+      const today = new Date().toISOString().split('T')[0];
+
+      const day = new Date();
+      day.setDate(day.getDate() - 2);
+      const yesterday = day.toISOString().split('T')[0];
+
       try {
-        const url = `https://newsapi.org/v2/everything?q=${news}&from=2025-02-18&to=2025-02-18&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
+        const url = `https://newsapi.org/v2/everything?q=${news}&from=${yesterday}&to=${today}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
         const response = await fetch(url);
         const data = await response.json();
   
@@ -25,36 +34,40 @@ const Tech = () => {
     },[])
   return (
     <div>
-      <h3 className='flex items-center'>
-        <hr className='w-9 font-bold' />
-        <span>Latest News</span>
-        <hr className='w-1/12 text-2xl'/>
-      </h3>
-      <div  className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 px-1 inset-shadow-zinc-300'>
-        {
-        articles.map((article, index) => (
-          <div className='' key={index}>
-            <div >
-              <img className='w-[100%] h-[250px]' src={article.urlToImage} alt="" />
-            </div>
-            <div>
-              <div className='text-black text-sm'>{article.title}</div>
-              <div className='text-gray-500 text-sm '>
-                <span className='pr-1'>{article.description}</span>
-                <a className='hover:bg-amber-500 text-black rounded-full px-2' href={article.url}>Read More</a></div>
-              
-            </div>
-            <div>
-              <span>{article.author}, {article.source.name} </span>
-              <div className='flex items-center'>
-                <span className="material-symbols-outlined">schedule</span>
-                <span className=''>{new Date(article.publishedAt).toLocaleString() }</span>
+      <Title text1='Tech' text2='News'/>
+      
+            { articles.length === 0 ? (
+        <div className="min-h-screen flex items-center justify-center w-full">
+          <img src={loading} alt="Loading..." className="w-16 h-16" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 px-1 place-items-center">
+          {articles.slice(0, 16).map((article, index) => (
+            <div key={index} className="w-full max-w-sm">
+              <div>
+                <img className="w-full h-[250px] object-cover" src={article.urlToImage} alt="" />
+              </div>
+
+              <div>
+                <div className="text-black text-sm">
+                  {article.title}. source: {article.source.name}
+                </div>
+
+                <div className="text-gray-500 text-sm">
+                  <a className="hover:bg-amber-500 text-amber-500 rounded-full px-2" href={article.url}>Read More</a>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center">
+                  <span className="material-symbols-outlined">schedule</span>
+                  <span>{getElapsedTime(article.publishedAt)}</span>
+                </div>
               </div>
             </div>
-          </div>
-        )).slice(0,10)  
-      }
-      </div>
+          ))}
+        </div>
+      )}
       
     </div>
   )
