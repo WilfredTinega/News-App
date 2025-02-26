@@ -92,7 +92,7 @@ const Trending = () => {
         <hr className='mt-2 text-blue-500' />
       </div>
 
-      <div className='sticky top-10 py-2 text-3xl backdrop-blur-3xl'>
+      <div className='py-2 text-xl sm:text-3xl'>
           <Title text1='Trending' text2='News' />
       </div>
       
@@ -101,29 +101,32 @@ const Trending = () => {
           <img src={loading} alt="Loading..." className="w-16 h-16" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 px-1 place-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-2 px-1">
           {articles.slice(0, 16).map((article, index) => (
-            <div key={index} className="w-full max-w-sm">
+            <div key={index} className="w-full max-w-sm bg-blue-50  rounded-2xl">
               <div>
-                <img className="w-full h-[250px] object-cover" src={article.urlToImage} alt="" />
+                <img className="w-full h-[250px] object-cover rounded-t-2xl" src={article.urlToImage} alt="" />
               </div>
 
-              <div>
-                <div className="text-black text-sm">
-                  {article.title}. source: {article.source.name}
+              <div className='p-2'>
+                <div>
+                  <div className="text-black text-sm">
+                    {article.title}, {article.source.name}
+                  </div>
+
+                  <div className="my-1">
+                    <a className="hover:bg-amber-500 hover:text-black text-amber-500 rounded-full px-1" href={article.url}>Read More</a>
+                  </div>
                 </div>
 
-                <div className="text-gray-500 text-sm">
-                  <a className="hover:bg-amber-500 text-amber-500 rounded-full px-2" href={article.url}>Read More</a>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="material-symbols-outlined">schedule</span>
+                    <span>{getElapsedTime(article.publishedAt)}</span>
+                  </div>
                 </div>
               </div>
-
-              <div>
-                <div className="flex items-center">
-                  <span className="material-symbols-outlined">schedule</span>
-                  <span>{getElapsedTime(article.publishedAt)}</span>
-                </div>
-              </div>
+              
             </div>
           ))}
         </div>

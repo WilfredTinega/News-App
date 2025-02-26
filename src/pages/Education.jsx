@@ -34,8 +34,9 @@ const Education = () => {
     },[])
   return (
     <div>
-      <Title text1='Education' text2='News' />
-
+      <div className='py-2 text-xl sm:text-3xl'>
+        <Title text1='Education' text2='News' />
+      </div>
             { articles.length === 0 ? (
               <div className="min-h-screen flex items-center justify-center w-full">
                 <img src={loading} alt="Loading..." className="w-16 h-16" />
