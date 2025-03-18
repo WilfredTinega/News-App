@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 import Title from '../components/Tittle';
 import loading from '../assets/loading.gif'
+import { NavLink } from 'react-router-dom';
 
 const Trending = () => {
 
   const [articles, setArticles] = useState([]);
+  const [images, setImages]= useState([]);
   const inputRef = useRef([]);
 
   const searchNews = async (news) => {
@@ -14,7 +16,7 @@ const Trending = () => {
     const day = new Date();
     day.setDate(day.getDate() - 1);
     const yesterday = day.toISOString().split('T')[0];
-    console.log(yesterday)
+    //console.log(yesterday)
 
     try {
       const url = `https://newsapi.org/v2/everything?q=${news}&from=${yesterday}&to=${today}&sortBy=relevancy&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
@@ -23,7 +25,11 @@ const Trending = () => {
 
       setArticles(
         data.articles
-      )      
+      )
+
+      setImages(
+        data.articles
+      )
       
     } catch (error) {
       console.error(error.message)
@@ -60,11 +66,11 @@ const Trending = () => {
   
 
   useEffect(()=>{
-    searchNews("education")
+    searchNews("technology and politics")
   },[])
 
   return (
-    <div>
+    <div className=''>
       <div className=''>
         <div className='mt-2 py-1 flex justify-center'>
         <div className='flex items-center justify-between gap-2 px-1 border border-amber-500 rounded-full'>
@@ -94,6 +100,35 @@ const Trending = () => {
 
       <div className='py-2 text-xl sm:text-3xl'>
           <Title text1='Trending' text2='News' />
+      </div>
+
+      <div className='flex items-center mx-2'>
+        <div className='bg-amber-500'>back</div>
+        <div className="flex gap-3  overflow-x-hidden">
+          {articles.slice(0, 5).map((article, index) => (
+            <div key={index} className="block w-3xl">
+              <div className='h-90 flex items-center justify-center' style={{ backgroundImage: `url(${article.urlToImage})`,backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+                  <div className='flex items-center justify-center rounded-md text-green-500 backdrop-blur-xl p-5 backdrop-brightness-200'>{article.title}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className='bg-amber-500'>next</div>
+      </div>
+
+      <div>
+        <div className='my-4 flex items-center justify-center gap-4 overflow-x-hidden'>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="/education">Education</NavLink>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="/agriculture">Agriculture</NavLink>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="health">Health</NavLink>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="education">Education</NavLink>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="politics">Politics</NavLink>
+          <NavLink className='border border-amber-500 hover:bg-blue-500 hover:text-amber-500 transition-shadow rounded-full p-1' to="technology">Technology</NavLink>
+        </div>
+        <div>
+        <hr className='m-auto text-blue-500 w-1/4 pb-5  ' />
+        </div>
+        
       </div>
       
       { articles.length === 0 ? (
