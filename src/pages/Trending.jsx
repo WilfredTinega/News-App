@@ -9,14 +9,17 @@ const Trending = () => {
   const [articles, setArticles] = useState([]);
   const [images, setImages]= useState([]);
   const inputRef = useRef([]);
-
+  const [fallBack, setFallBack] = useState([]);
   const searchNews = async (news) => {
     const today = new Date().toISOString().split('T')[0];
 
     const day = new Date();
     day.setDate(day.getDate() - 1);
     const yesterday = day.toISOString().split('T')[0];
-    //console.log(yesterday)
+
+    if(!VITE_NEWS_APIKEY){
+      setFallBack
+    }
 
     try {
       const url = `https://newsapi.org/v2/everything?q=${news}&from=${yesterday}&to=${today}&sortBy=relevancy&apiKey=${import.meta.env.VITE_NEWS_APIKEY}`;
